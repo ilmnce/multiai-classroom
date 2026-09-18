@@ -1,0 +1,47 @@
+{
+  "version": 2,
+  "defaultFlow": [
+    "student-architect",
+    "student-builder",
+    "student-verifier",
+    "student-cleanup",
+    "student-documenter"
+  ],
+  "students": [
+    {
+      "id": "student-architect",
+      "stage": "plan",
+      "strengths": ["repository discovery", "architecture", "dependency graph", "acceptance criteria"],
+      "writes": false,
+      "dependsOn": []
+    },
+    {
+      "id": "student-builder",
+      "stage": "implement",
+      "strengths": ["coding", "configuration", "integration", "focused checks"],
+      "writes": true,
+      "dependsOn": ["student-architect"]
+    },
+    {
+      "id": "student-verifier",
+      "stage": "verify",
+      "strengths": ["tests", "regression review", "security edge cases", "evidence"],
+      "writes": false,
+      "dependsOn": ["student-architect", "student-builder"]
+    },
+    {
+      "id": "student-cleanup",
+      "stage": "cleanup",
+      "strengths": ["temporary artifact cleanup", "secret exposure checks", "reversibility", "audit handoff"],
+      "writes": true,
+      "dependsOn": ["student-verifier"]
+    },
+    {
+      "id": "student-documenter",
+      "stage": "handoff",
+      "strengths": ["README", "runbook", "examples", "known limitations"],
+      "writes": true,
+      "dependsOn": ["student-cleanup"]
+    }
+  ]
+}

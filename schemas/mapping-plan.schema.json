@@ -1,0 +1,198 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://opencode.ai/schemas/mapping-plan.schema.json",
+  "title": "OsuMappingPlan",
+  "description": "Architect output contract schema defining plan, style profile, and acceptance criteria for beatmap generation.",
+  "type": "object",
+  "required": [
+    "run_id",
+    "mode",
+    "timing_source",
+    "style_profile",
+    "expected_artifacts",
+    "acceptance_criteria"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "description": "Unique identifier for this mapping run."
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["generate", "modify", "validate", "resume"],
+      "description": "Workflow mode."
+    },
+    "input_normalized": {
+      "type": "object",
+      "description": "Normalized inputs canonicalized by Student Architect."
+    },
+    "normalized_input": {
+      "type": "object",
+      "description": "Alternative key for normalized brief input properties."
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Verified facts extracted from input brief and inspected files."
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Explicit assumptions made where inputs were unspecified."
+    },
+    "facts_vs_assumptions": {
+      "type": "object",
+      "properties": {
+        "facts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "timing_source": {
+      "type": "object",
+      "description": "Timing foundation parameters with confidence score.",
+      "required": ["confidence"],
+      "properties": {
+        "source_type": {
+          "type": "string",
+          "description": "Origin of timing (user_provided, audio_analysis, source_beatmap)"
+        },
+        "bpm": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "offset_ms": {
+          "type": "integer"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Confidence rating for timing parameters between 0.0 and 1.0."
+        }
+      }
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of reference beatmap paths."
+    },
+    "reference_targets": {
+      "type": "object",
+      "properties": {
+        "local_reference_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mapper_reference": {
+          "type": ["object", "null"]
+        }
+      }
+    },
+    "style_profile": {
+      "type": "object",
+      "description": "Target mapping style profile and difficulty configuration.",
+      "properties": {
+        "style": {
+          "type": "string",
+          "enum": ["aimslop", "flow_aim", "hybrid"]
+        },
+        "target_star": {
+          "type": "object",
+          "properties": {
+            "min": { "type": "number" },
+            "max": { "type": "number" }
+          }
+        },
+        "recommended_cs": { "type": "number" },
+        "recommended_ar": { "type": "number" },
+        "recommended_od": { "type": "number" },
+        "recommended_hp": { "type": "number" },
+        "base_slider_multiplier": { "type": "number" }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "description": "Sequence of execution steps planned for Student Builder and tools.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": ["string", "integer"] },
+          "description": { "type": "string" },
+          "depends_on": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "tool": { "type": "string" },
+          "step": { "type": "integer" },
+          "name": { "type": "string" },
+          "pass": { "type": "string" }
+        }
+      }
+    },
+    "execution_steps": {
+      "type": "array",
+      "description": "Alternative key for sequence of execution steps.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step": { "type": "integer" },
+          "name": { "type": "string" },
+          "tool": { "type": "string" },
+          "pass": { "type": "string" },
+          "id": { "type": ["string", "integer"] },
+          "description": { "type": "string" },
+          "depends_on": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "expected_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Relative paths to artifacts that must be produced by run completion."
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "description": "Acceptance criteria contracts to be evaluated by Student Verifier.",
+      "items": {
+        "type": "object",
+        "required": ["id", "description"],
+        "properties": {
+          "id": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "blocking_questions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Any unresolved ambiguities requiring user/Teacher clarification."
+    }
+  },
+  "additionalProperties": true
+}

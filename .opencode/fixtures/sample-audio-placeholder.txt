@@ -1,0 +1,21 @@
+# Sample Audio Placeholder for osu! Mapping Testing & Verification
+# =================================================================
+
+This placeholder represents a standardized 30-second audio track for testing and validating osu! beatmap generation engines without requiring binary audio files (.mp3/.ogg/.wav).
+
+Audio Specifications for Canonical Test Suite:
+- Filename: audio.mp3
+- Format: MPEG-1 Audio Layer III (MP3), 44.1 kHz, 16-bit Stereo, 192 kbps
+- Track Duration: 30,000 ms (30.00 seconds)
+- Global BPM: 100.00 BPM
+- Beat Interval: 600.00 ms per beat (1/1 divisor)
+  - 1/2 beat divisor: 300.00 ms
+  - 1/3 beat divisor: 200.00 ms
+  - 1/4 beat divisor: 150.00 ms
+  - 1/6 beat divisor: 100.00 ms
+  - 1/8 beat divisor: 75.00 ms
+- First Beat Offset: 0 ms (Uninherited timing point at t=0ms, beatLength=600.0)
+- Time Signature: 4/4 (Meter: 4)
+
+Usage in Acceptance Tests:
+When running validate_osu.py or check_originality.py, passing this audio path or omitting it allows the validator to test active song coverage across the 30-second timeline.

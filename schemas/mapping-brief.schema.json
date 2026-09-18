@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://opencode.ai/schemas/mapping-brief.schema.json",
+  "title": "OsuMappingBrief",
+  "description": "Input contract schema for osu! mapping workflow in MultiAI Classroom.",
+  "type": "object",
+  "required": [
+    "mode",
+    "ruleset",
+    "bpm",
+    "offset_ms",
+    "style",
+    "target_star",
+    "output_root",
+    "constraints"
+  ],
+  "properties": {
+    "mode": {
+      "type": "string",
+      "enum": ["generate", "modify", "validate", "resume"],
+      "description": "The execution mode for the mapping workflow."
+    },
+    "ruleset": {
+      "type": "string",
+      "enum": ["osu"],
+      "description": "Target game mode ruleset. MVP strictly supports standard osu! (Mode 0)."
+    },
+    "audio_path": {
+      "type": ["string", "null"],
+      "description": "Absolute or workspace-relative path to the song audio file."
+    },
+    "source_beatmap_path": {
+      "type": ["string", "null"],
+      "description": "Absolute or workspace-relative path to existing source .osu file for modify/validate mode."
+    },
+    "bpm": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Song tempo in Beats Per Minute. Must be strictly positive."
+    },
+    "offset_ms": {
+      "type": "integer",
+      "description": "Millisecond offset of the first downbeat in the audio track."
+    },
+    "style": {
+      "type": "string",
+      "enum": ["aimslop", "flow_aim", "hybrid"],
+      "description": "Target mapping style profile."
+    },
+    "target_star": {
+      "type": "object",
+      "description": "Target star difficulty rating range.",
+      "required": ["min", "max"],
+      "properties": {
+        "min": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 10.0,
+          "description": "Minimum acceptable star rating."
+        },
+        "max": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 10.0,
+          "description": "Maximum acceptable star rating."
+        }
+      },
+      "additionalProperties": false
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Array of file paths to reference .osu beatmaps used for similarity comparison."
+    },
+    "mapper_reference": {
+      "type": ["object", "null"],
+      "description": "Optional mapper profile or aggregate reference metadata.",
+      "properties": {
+        "mapper_name": {
+          "type": "string"
+        },
+        "reference_maps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "preferred_cs": {
+          "type": "number"
+        },
+        "preferred_ar": {
+          "type": "number"
+        }
+      }
+    },
+    "output_root": {
+      "type": "string",
+      "description": "Root path where the isolated run directory will be created."
+    },
+    "constraints": {
+      "type": "object",
+      "description": "Safety, immutability, and verification constraints.",
+      "required": [
+        "preserve_source",
+        "overwrite",
+        "require_full_song_coverage",
+        "require_originality_resolution"
+      ],
+      "properties": {
+        "preserve_source": {
+          "type": "boolean",
+          "description": "Ensure original source files are strictly treated as read-only."
+        },
+        "overwrite": {
+          "type": "boolean",
+          "description": "Whether existing artifacts in run directory may be overwritten."
+        },
+        "require_full_song_coverage": {
+          "type": "boolean",
+          "description": "Enforce minimum 95% mapping coverage across active audio duration."
+        },
+        "require_originality_resolution": {
+          "type": "boolean",
+          "description": "Require anti-plagiarism originality check against references."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

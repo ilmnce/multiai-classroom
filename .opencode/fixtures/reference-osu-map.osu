@@ -1,0 +1,92 @@
+osu file format v14
+
+[General]
+AudioFilename: audio.mp3
+AudioLeadIn: 0
+PreviewTime: -1
+Countdown: 0
+SampleSet: Soft
+StackLeniency: 0.7
+Mode: 0
+LetterboxInBreaks: 0
+WidescreenStoryboard: 0
+
+[Editor]
+DistanceSpacing: 1.0
+BeatDivisor: 4
+GridSize: 16
+TimelineZoom: 1.0
+
+[Metadata]
+Title: Distinct Reference Map
+TitleUnicode: Distinct Reference Map
+Artist: Another Artist
+ArtistUnicode: Another Artist
+Creator: Distinct Mapper
+Version: Hard
+Source: 
+Tags: test fixture reference distinct
+BeatmapID: 0
+BeatmapSetID: -1
+
+[Difficulty]
+HPDrainRate: 6
+CircleSize: 4.2
+OverallDifficulty: 7
+ApproachRate: 8.5
+SliderMultiplier: 1.6
+SliderTickRate: 1
+
+[Events]
+//Background and Video events
+0,0,"bg.jpg",0,0
+//Break Periods
+//Storyboard Layer 0 (Background)
+//Storyboard Layer 1 (Fail)
+//Storyboard Layer 2 (Pass)
+//Storyboard Layer 3 (Foreground)
+//Storyboard Sound Samples
+
+[TimingPoints]
+0,500,4,2,1,60,1,0
+
+[HitObjects]
+100,100,500,1,0,0:0:0:0:
+150,120,1000,1,0,0:0:0:0:
+200,160,1500,1,0,0:0:0:0:
+250,220,2000,1,0,0:0:0:0:
+300,280,2500,1,0,0:0:0:0:
+350,300,3000,1,0,0:0:0:0:
+400,260,3500,1,0,0:0:0:0:
+420,200,4000,1,0,0:0:0:0:
+380,140,4500,1,0,0:0:0:0:
+320,100,5000,1,0,0:0:0:0:
+260,100,5500,1,0,0:0:0:0:
+200,120,6000,1,0,0:0:0:0:
+140,160,6500,1,0,0:0:0:0:
+100,220,7000,1,0,0:0:0:0:
+120,280,7500,1,0,0:0:0:0:
+180,320,8000,1,0,0:0:0:0:
+240,320,8500,1,0,0:0:0:0:
+300,300,9000,1,0,0:0:0:0:
+360,260,9500,1,0,0:0:0:0:
+400,200,10000,1,0,0:0:0:0:
+380,140,11000,1,0,0:0:0:0:
+320,100,12000,1,0,0:0:0:0:
+240,100,13000,1,0,0:0:0:0:
+160,120,14000,1,0,0:0:0:0:
+100,180,15000,1,0,0:0:0:0:
+120,260,16000,1,0,0:0:0:0:
+200,320,17000,1,0,0:0:0:0:
+280,320,18000,1,0,0:0:0:0:
+360,280,19000,1,0,0:0:0:0:
+420,220,20000,1,0,0:0:0:0:
+400,140,21000,1,0,0:0:0:0:
+340,100,22000,1,0,0:0:0:0:
+260,100,23000,1,0,0:0:0:0:
+180,120,24000,1,0,0:0:0:0:
+120,180,25000,1,0,0:0:0:0:
+100,260,26000,1,0,0:0:0:0:
+160,320,27000,1,0,0:0:0:0:
+240,320,28000,1,0,0:0:0:0:
+320,280,29000,1,0,0:0:0:0:

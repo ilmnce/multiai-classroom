@@ -1,0 +1,19 @@
+# Local secrets and environment overrides
+.env
+.env.*
+!.env.example
+
+# Dependencies and generated caches
+node_modules/
+__pycache__/
+*.py[cod]
+
+# Runtime/session artifacts
+work/
+*.log
+
+# OS and editor metadata
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

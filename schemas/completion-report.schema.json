@@ -1,0 +1,161 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://opencode.ai/schemas/completion-report.schema.json",
+  "title": "OsuCompletionReport",
+  "description": "Builder output contract schema reporting generation metrics and stage self-validation results.",
+  "type": "object",
+  "required": [
+    "status",
+    "output_beatmap_path",
+    "stage_results",
+    "warnings",
+    "errors"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["COMPLETE", "INCOMPLETE"],
+      "description": "Completion state of the builder generation stage."
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "string"
+    },
+    "output_beatmap_path": {
+      "type": "string",
+      "description": "Absolute or run-relative path to generated candidate .osu beatmap file."
+    },
+    "format_ruleset": {
+      "type": "string",
+      "default": "osu",
+      "description": "Game ruleset format name."
+    },
+    "ruleset": {
+      "type": "string",
+      "default": "osu"
+    },
+    "format_version": {
+      "type": "integer",
+      "default": 14
+    },
+    "object_count": {
+      "type": "integer",
+      "description": "Total count of hit objects in candidate."
+    },
+    "object_counts": {
+      "type": "object",
+      "description": "Breakdown of hit objects by category.",
+      "properties": {
+        "circles": { "type": "integer" },
+        "sliders": { "type": "integer" },
+        "spinners": { "type": "integer" },
+        "total": { "type": "integer" }
+      }
+    },
+    "object_types": {
+      "type": "object",
+      "description": "Alternative object type breakdown map."
+    },
+    "coverage_percent": {
+      "type": "number",
+      "description": "Percentage of active song duration covered by hit objects."
+    },
+    "song_coverage_percent": {
+      "type": "number",
+      "description": "Alternative key for song coverage percentage."
+    },
+    "estimated_star": {
+      "type": "object",
+      "description": "Estimated Star Rating range or value.",
+      "properties": {
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "value": { "type": "number" },
+        "star_rating": { "type": "number" }
+      }
+    },
+    "estimated_difficulty": {
+      "type": "object",
+      "description": "Estimated difficulty parameters and SR breakdown.",
+      "properties": {
+        "star_rating": { "type": "number" },
+        "aim_rating": { "type": "number" },
+        "speed_rating": { "type": "number" },
+        "target_band_min": { "type": "number" },
+        "target_band_max": { "type": "number" },
+        "matches_target": { "type": "boolean" }
+      }
+    },
+    "target_band": {
+      "type": "object",
+      "properties": {
+        "min": { "type": "number" },
+        "max": { "type": "number" }
+      }
+    },
+    "stage_results": {
+      "type": "object",
+      "description": "Status outcomes of individual generation and verification stages.",
+      "additionalProperties": {
+        "type": "string",
+        "enum": ["PASS", "FAIL", "SKIPPED", "PARTIAL"]
+      }
+    },
+    "originality_verdict": {
+      "type": "string",
+      "enum": ["ORIGINAL", "DERIVATIVE", "NEAR_CLONE", "CLONE", "INCONCLUSIVE"],
+      "description": "Originality engine evaluation verdict."
+    },
+    "originality": {
+      "type": "object",
+      "properties": {
+        "verdict": {
+          "type": "string",
+          "enum": ["ORIGINAL", "DERIVATIVE", "NEAR_CLONE", "CLONE", "INCONCLUSIVE"]
+        },
+        "sequence_match_fraction": { "type": "number" },
+        "rhythm_jaccard": { "type": "number" },
+        "max_consecutive_matching_objects": { "type": "integer" }
+      }
+    },
+    "originality_metrics": {
+      "type": "object",
+      "description": "Detailed originality metrics dictionary."
+    },
+    "skipped_checks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "List of validation checks that were skipped and rationale."
+    },
+    "hard_requirements": {
+      "type": ["object", "boolean"],
+      "description": "Boolean or status map of hard validation gates."
+    },
+    "hard_requirements_passed": {
+      "type": "boolean",
+      "description": "Whether all hard requirements passed."
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Non-blocking diagnostic warnings."
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Blocking error descriptions."
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://opencode.ai/schemas/verification-report.schema.json",
+  "title": "OsuVerificationReport",
+  "description": "Verifier output contract schema recording independent test verdicts and acceptance criteria status.",
+  "type": "object",
+  "required": [
+    "verdict"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "verifier_id": {
+      "type": "string"
+    },
+    "verdict": {
+      "type": "string",
+      "enum": ["PASS", "PARTIAL", "FAIL"],
+      "description": "Overall independent verification verdict."
+    },
+    "commands_run": {
+      "type": "array",
+      "description": "List of shell / CLI commands executed during verification.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "command": { "type": "string" },
+          "exit_code": { "type": "integer" },
+          "stdout_snippet": { "type": "string" },
+          "stderr_snippet": { "type": "string" }
+        }
+      }
+    },
+    "commands_executed": {
+      "type": "array",
+      "description": "Alternative key for verification commands executed.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "command": { "type": "string" },
+          "exit_code": { "type": "integer" },
+          "stdout_snippet": { "type": "string" }
+        }
+      }
+    },
+    "exit_codes": {
+      "type": "object",
+      "description": "Map of tool/command names to their respective numeric exit codes."
+    },
+    "file_evidence": {
+      "type": "array",
+      "description": "File existence, size, and hash evidence evaluated by Verifier.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": { "type": "string" },
+          "exists": { "type": "boolean" },
+          "sha256": { "type": "string" },
+          "size_bytes": { "type": "integer" }
+        }
+      }
+    },
+    "regressions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Any regressions or unintended deltas detected."
+    },
+    "regressions_detected": {
+      "type": "boolean",
+      "default": false
+    },
+    "acceptance_criteria_status": {
+      "type": "array",
+      "description": "Evaluation of each acceptance criterion from mapping-plan.",
+      "items": {
+        "type": "object",
+        "required": ["id", "status"],
+        "properties": {
+          "id": { "type": "string" },
+          "description": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["PASS", "FAIL", "SKIPPED", "PARTIAL"]
+          },
+          "evidence": { "type": "string" }
+        }
+      }
+    },
+    "acceptance_criteria_results": {
+      "type": "array",
+      "description": "Alternative key for acceptance criteria status list.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "description": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["PASS", "FAIL", "SKIPPED", "PARTIAL"]
+          },
+          "evidence": { "type": "string" }
+        }
+      }
+    },
+    "source_checksum_unchanged": {
+      "type": "boolean",
+      "description": "Confirmation that source audio/beatmaps remained bit-for-bit unchanged."
+    },
+    "integrity_checks": {
+      "type": "object",
+      "properties": {
+        "source_unchanged": { "type": "boolean" },
+        "candidate_exists": { "type": "boolean" },
+        "sha256_matches_provenance": { "type": "boolean" }
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Verifier notes and observations."
+    },
+    "blocker_details": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "playability_disclaimer": {
+      "type": "string",
+      "description": "Mandatory human playability boundary disclaimer."
+    }
+  },
+  "additionalProperties": true
+}
